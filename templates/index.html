@@ -4,7 +4,7 @@
 <!-- bootstrap is my friend, super nice -->
 <html lang="en">
 <head>
-<title>Grades</title>
+<title>RPi Grades</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
@@ -16,9 +16,13 @@
             <h1>Hello, school!</h1>
             <p>Keep up the good work.</p>
             <p>
-            <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#studentLoginModal"
-                style="margin-bottom:10px;" role="button">Grades</a>
-            <a class="btn btn-warning" data-toggle="modal" data-target="#teacherLoginModal">I'm a teacher</a>
+                <div style="max-width:200px;">
+                    <button class="btn btn-info btn-block" data-toggle="modal" data-target="#studentLoginModal"
+                        style="margin-bottom:10px;" role="button">Grades</button>
+                </div>
+                <div style="max-width:200px;">
+                    <a class="btn btn-block btn-warning" data-toggle="modal" data-target="#teacherLoginModal">I'm a teacher</a>
+                </div>
             </p>
         </div>
 
