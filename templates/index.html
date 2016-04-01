@@ -1,0 +1,76 @@
+<!doctype HTML>
+<!-- TODO: Change name -->
+<!-- I tried, guys. mzG=gg`z is your friend. -->
+<!-- bootstrap is my friend, super nice -->
+<html lang="en">
+<head>
+<title>Grades</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
+</head>
+<header>
+    <div class="container" style="margin-left:15%;margin-right:15%;margin-top:40px;">
+        <div class="jumbotron">
+            <h1>Hello, school!</h1>
+            <p>Keep up the good work.</p>
+            <p>
+            <a class="btn btn-info btn-lg" data-toggle="modal" data-target="#studentLoginModal"
+                style="margin-bottom:10px;" role="button">Grades</a>
+            <a class="btn btn-warning" data-toggle="modal" data-target="#teacherLoginModal">I'm a teacher</a>
+            </p>
+        </div>
+
+        <!-- student login form modal -->
+        <div class="modal fade" id="studentLoginModal" tabindex="-1" role="dialog" aria-labelledby="LogInTitle">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Log In</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="student" name="student_login_form">
+                            <p><input type="text" name="student_username" id="student_username" placeholder="Student ID"></p>
+                            <p><input type="password" name="student_password" id="student_password" placeholder="Password"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </form> <!-- why does this work -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- teacher login form modal -->
+        <div class="modal fade" id="teacherLoginModal" tabindex="-1" role="dialog" aria-labelledby="LogInTitle">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Log In</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="teacher" name="teacher_login_form">
+                            <p><input type="text" name="teacher_username" id="teacher_username" placeholder="Teacher ID"></p>
+                            <p><input type="password" name="teacher_password" id="teacher_password" placeholder="Password"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Log in</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<body>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+</body>
+</html>
