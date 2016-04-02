@@ -1,7 +1,5 @@
 <!doctype HTML>
 <!-- TODO: Change name -->
-<!-- I tried, guys. mzG=gg`z is your friend. -->
-<!-- bootstrap is my friend, super nice -->
 <html lang="en">
 <head>
 <title>RPi Grades</title>
@@ -25,7 +23,17 @@
                 </div>
             </p>
         </div>
-
+        <div class="container-fluid" style="min-height:100%">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
         <!-- student login form modal -->
         <div class="modal fade" id="studentLoginModal" tabindex="-1" role="dialog" aria-labelledby="LogInTitle">
             <div class="modal-dialog" role="document">
@@ -36,14 +44,17 @@
                         <h4 class="modal-title" id="myModalLabel">Log In</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="student" name="student_login_form">
-                            <p><input type="text" name="student_username" id="student_username" placeholder="Student ID"></p>
-                            <p><input type="password" name="student_password" id="student_password" placeholder="Password"></p>
+                        <form class="form-inline" method="post" action=""> 
+                            <input class="form-control" type="text" name="username"
+                                id="student_username" placeholder="Student ID" value="{{request.form.username}}">
+                            <input class="form-control" type="password" name="password"
+                                id="student_password" placeholder="Password" value="{{request.form.password}}">
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                        </form>
                     </div>
+                    <p>{{error}}</p>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Log in</button>
-                    </form> <!-- why does this work -->
                     </div>
                 </div>
             </div>
@@ -59,7 +70,7 @@
                         <h4 class="modal-title" id="myModalLabel">Log In</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="teacher" name="teacher_login_form">
+                        <form method="post" action="teacher"> 
                             <p><input type="text" name="teacher_username" id="teacher_username" placeholder="Teacher ID"></p>
                             <p><input type="password" name="teacher_password" id="teacher_password" placeholder="Password"></p>
                     </div>

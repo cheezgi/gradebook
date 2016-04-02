@@ -30,9 +30,22 @@
 <body>
     <div class="border-row" style="width:100%;margin-bottom:15px;"></div>
     <div class="container-fluid" style="min-height:100%">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"
+                            aria-label="close"><span aria-hidden="true">&times;
+                        </span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% block body %}{% endblock %}
     </div>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}">
+    </script>
 </body>
 </html>

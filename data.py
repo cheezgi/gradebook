@@ -36,5 +36,7 @@ def updateGrades(newGrade, studentId, className, teacher):
     students.execute('UPDATE student SET grade=? WHERE id=? AND class=? AND teacher=?;',
             (newGrade, studentId, className, teacher,))
 
+def registerStudents(studentId, password):
+    
 
 
