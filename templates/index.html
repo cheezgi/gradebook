@@ -45,11 +45,12 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-inline" method="post" action=""> 
-                            <input class="form-control" type="text" name="username"
+                            <input class="form-control" type="text" name="student_username"
                                 id="student_username" placeholder="Student ID" value="{{request.form.username}}">
-                            <input class="form-control" type="password" name="password"
+                            <input class="form-control" type="password" name="student_password"
                                 id="student_password" placeholder="Password" value="{{request.form.password}}">
                             <button type="submit" class="btn btn-primary">Log in</button>
+                            <input type="hidden" name="isteacher" value="false">
                         </form>
                     </div>
                     <p>{{error}}</p>
@@ -77,6 +78,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Log in</button>
+                        <input type="hidden" name="isteacher" value="true">
                     </form>
                     </div>
                 </div>

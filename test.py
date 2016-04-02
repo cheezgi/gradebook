@@ -8,18 +8,25 @@ def index():
     error = ""
     try:
         if request.method == "POST":
-            attempted_username = request.form['username']
-            attempted_password = request.form['password']
-            #flash(attempted_username) # debugging only
-            #flash(attempted_password)
-            # do this with data.py functions later
-            if attempted_username == "student" and attempted_password == "password":
-                return redirect(url_for('student'))
+            isTeacher = request.form['isteacher'] == "true"
+            if not isTeacher:
+                attempted_username = request.form['student_username']
+                attempted_password = request.form['student_password']
+                if attempted_username == "student" and attempted_password == "password":
+                    return redirect(url_for('student'))
+                else:
+                    flash("Incorrect username/password, please try again.")
             else:
-                flash("Incorrect username/password.")
+                attempted_username = request.form['teacher_username']
+                attempted_password = request.form['teacher_password']
+                if attempted_username == "teacher" and attempted_password == "password":
+                    return redirect(url_for('teacher'))
+                else:
+                    flash("Incorrect username/password, please try again.")
+        elif request.method == "GET":
+            isTeacher = True
         return render_template("index.html", error = error)
     except Exception as e:
-        #flash(e) #debugging only
         return render_template("index.html", error = error)
     return render_template("index.html")
 
@@ -32,9 +39,13 @@ def student():
 def teacher():
     return render_template("teacher.html")
 
-@app.route('/admin/')
+@app.route('/admin_login/', methods=["POST", "GET"])
 def admin():
-    return "this is the admin page boiiii"
+    try:
+        classes, students, users, grades, teachers = connect()
+        return render_template("admin.html")
+    except Exception as e:
+        return render_template("admin.html")
 
 @app.errorhandler(404)
 def four_zero_four(e):

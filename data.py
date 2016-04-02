@@ -1,3 +1,4 @@
+import hashlib
 import sqlite3
 
 classes = sqlite3.connect('classes.db').cursor()
@@ -21,22 +22,14 @@ def newdb():
             grade INTEGER NOT NULL,
             outOf INTEGER NOT NULL,
             date TEXT NOT NULL,
-            weight INTEGER NOT NULL,)''')
+            weight INTEGER NOT NULL);''')
     users.execute('''CREATE TABLE IF NOT EXISTS users (
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL);''')
     classes.execute('''CREATE TABLE IF NOT EXISTS classes (
             id INTEGER UNIQUE NOT NULL,
-            name TEXT UNIQUE NOT NULL)''')
+            name TEXT UNIQUE NOT NULL);''')
 
-def getGrades(studentId):
-    return students.execute('SELECT * FROM student WHERE id=?', (studentId,))
-
-def updateGrades(newGrade, studentId, className, teacher):
-    students.execute('UPDATE student SET grade=? WHERE id=? AND class=? AND teacher=?;',
-            (newGrade, studentId, className, teacher,))
-
-def registerStudents(studentId, password):
-    
-
+def connect():
+    return classes, students, users, grades, teachers
 
