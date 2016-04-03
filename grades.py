@@ -1,5 +1,6 @@
 from data import *
 from flask import Flask, render_template, flash, request, url_for, redirec
+import os
 from passlib.hash import sha256_crypt
 from wtforms import Form
 #from werkzeug.contrib.fixers import ProxyFix #uncomment for gunicorn uwsgi
@@ -75,8 +76,14 @@ def admin():
         form = RegisterStudents(request.form)
         if request.method == "POST" and form.validate():
             username = form.username.data
-            email = form.email.data
             password = sha256_crypt.encrypt(form.password.data)
+            users, conn = data.getUsers()
+            q = users.execute("SELECT * FROM users WHERE username=?", (username,))
+            if int(len(q)) > 0:
+                flash("Username is taken.")
+            else:
+                users.execute("INSERT INTO users VALUES (?, default)", (username,))
+                conn.commit()
     except Exception as e:
         return str(e)
     classes, students, users, grades, teachers = data.connect()
@@ -92,7 +99,7 @@ def five_hundred(e):
 
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 
-app.secret_key = "totally secret, probably should be hashed"
+app.secret_key = os.urandom(24)
 
 # debugging only
 if __name__ == "__main__":

@@ -1,11 +1,18 @@
 import hashlib
 import sqlite3
 
-classes = sqlite3.connect('db/classes.db').cursor()
-students = sqlite3.connect('db/student.db').cursor()
-users = sqlite3.connect('db/sers.db').cursor()
-grades = sqlite3.connect('db/grades.db').cursor()
-teachers = sqlite3.connect('db/teachers.db').cursor()
+#ugh
+classes_connection = sqlite3.connect('db/classes.db')
+students_connection = sqlite3.connect('db/student.db')
+users_connection = sqlite3.connect('db/sers.db')
+grades_connection = sqlite3.connect('db/grades.db')
+teachers_connection = sqlite3.connect('db/teachers.db')
+
+classes = classes_connection.cursor()
+students = students_connection.cursor()
+users = users_connection.cursor()
+grades = grades_connection.cursor()
+teachers = teachers_connection.cursor()
 
 def newdb():
     students.execute('''CREATE TABLE IF NOT EXISTS student (
@@ -33,3 +40,5 @@ def newdb():
 def connect():
     return classes, students, users, grades, teachers
 
+def getUsers():
+    return users, users_connection

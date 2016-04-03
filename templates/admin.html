@@ -20,6 +20,17 @@
 <div class="container" style="margin-left:15%;margin-right:15%;margin-top:40px;">
     <p><h3>Register/remove users</h3></p>
     <p>insert form here, possible CSV, possible db conversion, etc</p>
+        <div class="container-fluid" style="min-height:100%">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
     <p><h3>Create databases</h3></p>
     <p>sqlite3 databases</p>
 </div>
