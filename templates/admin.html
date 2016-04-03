@@ -1,30 +1,27 @@
 <!doctype HTML>
-<html lang='en'>
-    <head>
-        <title>Admin</title>
-        <meta charset='utf-8'>
-        <meta name="viewport" content="width=device-width,initial-scale-1">
-        <link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
-        <link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
-    </head>
-    <header>
-        <div class="container" style="margin-left:15%; margin-right:15%; margin-top:40px;">
-            <div class="jumbotron">
-                <h1>Admin Login</h1>
-                <p>Students will face serious penalty for trying to enter the admin page.</p>
-                <div class="container" style="max-width:500px;align:none;">
-                    <form method="post" action="">
-                        <input class="form-control" type="text" name="admin_username" id="admin_username"
-                            placeholder="Admin Username" value="{{request.form.username}}"><br>
-                        <input class="form-control" type="text" name="admin_password" id="admin_password"
-                            placeholder="Password" value="{{request.form.username}}"><br>
-                        <button type="submit" class="btn btn-info btn-block">Log in</button>
-                        <a href="javascript:javascript:history.go(-1)" style="text-decoration:none;">
-                            <button class="btn btn-warning btn-block">Back</button>
-                        </a>
-                    </form>
-                </div>
-            </div>
+<html lang="en">
+<head>
+<title>RPi Grades</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
+</head>
+<header>
+    <div class="container" style="margin-left:15%;margin-right:15%;margin-top:40px;">
+        <div class="jumbotron">
+            <h1>Admin Page</h1>
         </div>
-    </header>
+    </div>
+</header>
+<body>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<div class="container" style="margin-left:15%;margin-right:15%;margin-top:40px;">
+    <p><h3>Register/remove new users</h3></p>
+    <p>insert form here, possible CSV, possible db conversion, etc</p>
+    <p><h3>Create databases</h3></p>
+    <p>sqlite3 databases</p>
+</div>
+</body>
 </html>

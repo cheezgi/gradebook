@@ -1,5 +1,6 @@
 from data import *
 from flask import Flask, render_template, flash, request, url_for, redirect
+from wtforms import Form
 #from werkzeug.contrib.fixers import ProxyFix
 app = Flask(__name__)
 
@@ -40,12 +41,21 @@ def teacher():
     return render_template("teacher.html")
 
 @app.route('/admin_login/', methods=["POST", "GET"])
-def admin():
+def admin_login():
     try:
-        classes, students, users, grades, teachers = connect()
-        return render_template("admin.html")
+        if request.method == "POST":
+            attempted_username = request.form['admin_username']
+            attempted_password = request.form['admin_password']
+            if attempted_username == "admin" and attempted_password == "password":
+                return redirect(url_for('admin'))
+            return render_template("admin_login.html")
     except Exception as e:
-        return render_template("admin.html")
+        return render_template("admin_login.html")
+    return render_template("admin_login.html")
+
+@app.route('/admin/')
+def admin():
+    return render_template("admin.html")
 
 @app.errorhandler(404)
 def four_zero_four(e):
