@@ -7,7 +7,7 @@ Run the following commands to install `gradebook`:
 
 ```
 $ git clone https://github.com/cheezgi/gradebook.git somepath
-# ./install.sh somepath
+# somepath/install.sh somepath
 ```
 
 This program relies on Flask and Gunicorn. To run as a Gunicorn app, run the following:
