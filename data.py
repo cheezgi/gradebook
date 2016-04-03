@@ -1,11 +1,11 @@
 import hashlib
 import sqlite3
 
-classes = sqlite3.connect('classes.db').cursor()
-students = sqlite3.connect('student.db').cursor()
-users = sqlite3.connect('users.db').cursor()
-grades = sqlite3.connect('grades.db').cursor()
-teachers = sqlite3.connect('teachers.db').cursor()
+classes = sqlite3.connect('db/classes.db').cursor()
+students = sqlite3.connect('db/student.db').cursor()
+users = sqlite3.connect('db/sers.db').cursor()
+grades = sqlite3.connect('db/grades.db').cursor()
+teachers = sqlite3.connect('db/teachers.db').cursor()
 
 def newdb():
     students.execute('''CREATE TABLE IF NOT EXISTS student (
