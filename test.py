@@ -1,7 +1,9 @@
 from data import *
 from flask import Flask, render_template, flash, request, url_for, redirect
+import hashlib
 from wtforms import Form
-#from werkzeug.contrib.fixers import ProxyFix
+#from werkzeug.contrib.fixers import ProxyFix #uncomment for gunicorn uwsgi
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -65,7 +67,7 @@ def four_zero_four(e):
 def five_hundred(e):
     return render_template("500.html", error = e)
 
-#app.wsgi_app = ProxyFix(app.wsgi_app)
+#app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 
 app.secret_key = "totally secret, probably should be hashed"
 
