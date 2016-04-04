@@ -1,8 +1,8 @@
 import data
 from flask import Flask, render_template, flash, request, url_for, redirect, session, g
 import gc
+import hashlib
 import os
-from passlib.hash import sha256_crypt
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 #from werkzeug.contrib.fixers import ProxyFix #uncomment for gunicorn uwsgi
 
@@ -22,21 +22,18 @@ def index():
         if request.method == "POST":
             #derpy way of determining form name
             isTeacher = request.form['isteacher'] == "true" # yup.
-
             if not isTeacher:
-                attempted_username = request.form['student_username']
-                attempted_password = sha256_crypt.encrypt(request.form['student_password'])
-
-                if attempted_username == "student" and attempted_password == u"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8":
+                stud_username = request.form['student_username']
+                stud_password = hashlib.sha512((request.form['student_password']).encode('utf-8')).hexdigest()
+                if stud_username == "student" and stud_password == 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86':
                     session['logged_in'] = True
                     return redirect(url_for('student'))
                 else:
                     flash("Incorrect username/password, please try again.")
             else:
-                attempted_username = request.form['teacher_username']
-                attempted_password = sha256_crypt.encrypt(request.form['teacher_password'])
-
-                if attempted_username == "teacher" and attempted_password == u"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8":
+                teach_username = request.form['teacher_username']
+                teach_password = hashlib.sha512((request.form['teacher_password']).encode('utf-8')).hexdigest()
+                if teach_username == "teacher" and teach_password == 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86':
                     session['logged_in'] = True
                     return redirect(url_for('teacher'))
                 else:
@@ -62,8 +59,8 @@ def admin_login():
     try:
         if request.method == "POST":
             attempted_username = request.form['admin_username']
-            attempted_password = sha256_crypt.encrypt(request.form['admin_password'])
-            if attempted_username == "admin" and attempted_password == u"5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8":
+            attempted_password = hashlib.sha512((request.form['admin_password']).encode('utf-8')).hexdigest()
+            if attempted_username == "admin" and attempted_password == 'b109f3bbbc244eb82441917ed06d618b9008dd09b3befd1b5e07394c706a8bb980b1d7785e5976ec049b46df5f1326af5a2ea6d103fd07c95385ffab0cacbc86':
                 return redirect(url_for('admin'))
             return render_template("admin_login.html")
     except Exception as e:
@@ -77,7 +74,7 @@ def admin():
             formName = request.form['form_name']
             if formName == "register":
                 new_username = request.form['new_username']
-                if data.register(new_username, sha256_crypt.encrypt(u"default")):
+                if data.register(new_username, hashlib.sha512(u"default").hexdigest()):
                     flash("User registered")
                 else:
                     flash("Username taken")
@@ -106,6 +103,6 @@ app.secret_key = os.urandom(24)
 
 # debugging only
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
 
 
