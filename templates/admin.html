@@ -17,22 +17,36 @@
 <body>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<div class="container" style="margin-left:15%;margin-right:15%;margin-top:40px;">
+<div class="container" style="max-width:900px;margin-top:40px;">
+    <div class="container-fluid" style="min-height:100%">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     <p><h3>Register/remove users</h3></p>
-    <p>insert form here, possible CSV, possible db conversion, etc</p>
-        <div class="container-fluid" style="min-height:100%">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
-    <p><h3>Create databases</h3></p>
-    <p>sqlite3 databases</p>
+    <form method="POST" action="" class="form-inline">
+        <input class="form-control" type="text" name="new_username" id="new_username"
+            placeholder="New Username" value="">
+        <button type="submit" class="btn btn-info">Register</button>
+        <input type="hidden" name="form_name" value="register">
+        <!-- form type, used for logic stuff -->
+    </form>
+    <p><h3/>Create databases</h3></p>
+    <p>
+        <form method="POST" action="" class="form-inline">
+            This will create new databases if they do not already exist. This must
+            be pressed in order to begin working:
+            <button type="submit" class="btn btn-warning">Create</button>
+            <input type="hidden" name="form_name" value="databases">
+        </form>
+    </p>
 </div>
 </body>
 </html>
+

@@ -1,10 +1,11 @@
+import gc
 import hashlib
 import sqlite3
 
 #ugh
 classes_connection = sqlite3.connect('db/classes.db')
 students_connection = sqlite3.connect('db/student.db')
-users_connection = sqlite3.connect('db/sers.db')
+users_connection = sqlite3.connect('db/users.db')
 grades_connection = sqlite3.connect('db/grades.db')
 teachers_connection = sqlite3.connect('db/teachers.db')
 
@@ -14,6 +15,7 @@ users = users_connection.cursor()
 grades = grades_connection.cursor()
 teachers = teachers_connection.cursor()
 
+#TODO: add call to ./install.sh
 def newdb():
     students.execute('''CREATE TABLE IF NOT EXISTS student (
             id INTEGER NOT NULL,
@@ -40,5 +42,13 @@ def newdb():
 def connect():
     return classes, students, users, grades, teachers
 
-def getUsers():
-    return users, users_connection
+#def getUsers():
+#    return users, users_connection
+
+def register(username, password):
+    if not users.execute("SELECT * FROM users WHERE username=?", (username,)).fetchall():
+        users.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+        users_connection.commit()
+        return True
+    else:
+        return False
