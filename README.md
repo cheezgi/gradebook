@@ -44,6 +44,7 @@ cd somepath
 bin/activate
 bin/pip install flask passlib wtforms gunicorn
 deactivate
+mkdir db
 bin/gunicorn -b 0.0.0.0:80 grades:app
 ```
 
