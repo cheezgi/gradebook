@@ -1,6 +1,17 @@
 # gradebook
 flask/gunicorn web gradebook
 
+###TODO
+
+* Add grade insertion tools *(important)*
+* Add improved user functionality
+  * Sessions
+  * Password changing
+* Add data analysis tools *(important)*
+  * Grade data
+  * Transcript data
+  * Attendance data
+
 ## installation
 
 *This feature is currently broken*
