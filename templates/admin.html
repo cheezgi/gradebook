@@ -29,6 +29,10 @@
             {% endif %}
         {% endwith %}
     </div>
+    <form method="POST" action="" class="form-inline">
+        <input type="hidden" name="form_name" value="logout">
+        <button type="submit" class="btn btn-info">Log out</button>
+    </form>
     <p><h3>Register/remove users</h3></p>
     <p>The default password is "password"</p>
     <form method="POST" action="" class="form-inline">
