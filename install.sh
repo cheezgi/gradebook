@@ -1,24 +1,17 @@
 #!/bin/bash
-echo "Installing python-virtualenv"
-echo "----------------------------"
-yes |  apt install python-virtualenv
-if [ -z $1 ]
+cd ..
+dir = $1
+if [ -z dir ]
 then
-    echo "Starting python virtual environment in grades"
-    echo "---------------------------------------------"
-    virtualenv grades
-    grades/bin/activate
-    grades/bin/pip install flask
-    grades/bin/pip install wtforms
-    grades/bin/pip install passlib
-    grades/bin/pip install gunicorn
-else
-    echo "Starting python virtual environment in $1"
-    echo "-----------------------------------------"
-    virtualenv $1
-    $1/bin/activate
-    $1/bin/pip install flask
-    $1/bin/pip install wtforms
-    $1/bin/pip install passlib
-    $1/bin/pip install gunicorn
+    dir = "gradebook"
 fi
+echo "Installing gradebook in $dir"
+virtualenv $dir
+cd $dir
+bin/pip install flask
+bin/pip install gunicorn
+bin/pip install passlib
+mkdir db
+echo "Gradebook should be correctly set up."
+echo "Run gradebook with the following command:"
+echo -e "\tsudo bin/gunicorn -b 0.0.0.0:80 grades:app"
