@@ -1,15 +1,15 @@
 #!/bin/bash
 cd ..
-$dir = $1
-echo $dir
-if [ -z $dir ]
+$directect = $1
+echo $directect
+if [ -z $direct ]
 then
-    dir = "gradebook"
+    direct = "gradebook"
 fi
-echo $dir
-echo "Installing gradebook in $dir"
-virtualenv $dir
-cd $dir
+echo $direct
+echo "Installing gradebook in $direct"
+virtualenv $direct
+cd $direct
 bin/pip install flask
 bin/pip install gunicorn
 bin/pip install passlib
