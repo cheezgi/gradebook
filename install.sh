@@ -1,12 +1,10 @@
 #!/bin/bash
 cd ..
 direct=$1
-echo $direct
 if [ -z $direct ]
 then
     direct="gradebook"
 fi
-echo $direct
 echo "Installing gradebook in $direct"
 virtualenv $direct
 cd $direct
