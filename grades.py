@@ -4,7 +4,7 @@ from functools import wraps
 import gc
 import os
 from passlib.hash import sha256_crypt
-from wtforms import Form, BooleanField, TextField, PasswordField, validators
+#from wtforms import Form, BooleanField, TextField, PasswordField, validators
 #from werkzeug.contrib.fixers import ProxyFix #uncomment for gunicorn uwsgi
 
 # TODO: database searching for matched passwords
