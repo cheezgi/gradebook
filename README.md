@@ -14,14 +14,16 @@ flask/gunicorn web gradebook
 
 ## installation
 
-*This feature is currently broken*
-
 Run the following commands to install `gradebook`:
 
 ```
-$ git clone https://github.com/cheezgi/gradebook.git somepath
-# somepath/install.sh somepath
+$ git clone https://github.com/cheezgi/gradebook.git
+$ cd gradebook
+$ ./install.sh
 ```
+
+You can install gradebook to whatever directory you want by specifying it
+to `git clone ... /your/dir` and `./install.sh /your/dir`.
 
 This program relies on Flask and Gunicorn. To run as a Gunicorn app, run the following:
 
@@ -36,20 +38,18 @@ then run gunicorn without `-b 0.0.0.0:80`.
 Alternatively, run the following commands:
 
 ```
-apt install python
-apt install python-virtualenv
+apt install python python-virtualenv
 git clone https://github.com/cheezgi/gradebook.git somepath
 virtualenv somepath
 cd somepath
 bin/activate
-bin/pip install flask passlib wtforms gunicorn
+bin/pip install flask passlib gunicorn
 deactivate
 mkdir db
 bin/gunicorn -b 0.0.0.0:80 grades:app
 ```
 
 Now you can navigate to the server's IP address and make sure it's working.
-
 
 ##setup
 
