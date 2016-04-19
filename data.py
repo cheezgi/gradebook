@@ -56,10 +56,10 @@ def newdb():
             teacher_id INTEGER NOT NULL);''')
 
 #user functions
-def register(username, password):
+def register(username, password, id, isteacher):
     # relies on falseness of []
     if not users.execute("SELECT * FROM users WHERE username=?", (username,)).fetchall():
-        users.execute("INSERT INTO users VALUES (?, ?)", (username, password))
+        users.execute("INSERT INTO users VALUES (?, ?, ?, ?)", (username, password, id, isteacher))
         users_connection.commit()
         return True
     else:
@@ -67,7 +67,11 @@ def register(username, password):
 
 def get_pass(username):
     #no duplicate usernames, so indexing is OK
-    return users.execute('SELECT * FROM users WHERE username=?', (username,)).fetchall()[0][1]
+    try:
+        q = users.execute('SELECT * FROM users WHERE username=?', (username,)).fetchall()[0][1]
+    except Exception as e:
+        return e
+    return q
 
 #students functions
 def get_student_grades(studentID):

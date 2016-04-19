@@ -102,7 +102,7 @@ def admin():
             formName = request.form['form_name']
             if formName == "register":
                 new_username = request.form['new_username']
-                if data.register(new_username, sha256_crypt.encrypt('password')):
+                if data.register(new_username, sha256_crypt.encrypt('password'), 2, 0):
                     flash("User registered")
                 else:
                     flash("Username taken")
