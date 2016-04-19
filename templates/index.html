@@ -8,7 +8,7 @@
 <link href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}" rel="stylesheet">
 <link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}">
 </head>
-<header>
+<header> <!-- not really sure why this is all in <header> -->
     <div class="container" style="max-width:900px;margin-top:40px;">
         <div class="jumbotron">
             <h1>Hello, school!</h1>
@@ -77,8 +77,10 @@
                     </div>
                     <div class="modal-body">
                         <form class="form-inline" method="post" action=""> 
-                            <input type="text" name="teacher_username" id="teacher_username" placeholder="Teacher ID">
-                            <input type="password" name="teacher_password" id="teacher_password" placeholder="Password">
+                            <input class="form-control" type="text" name="teacher_username"
+                                id="teacher_username" placeholder="Teacher ID" value="{{request.form.username}}">
+                            <input class="form-control" type="password" name="teacher_password"
+                                id="teacher_password" placeholder="Password" value="{{request.form.username}}">
                             <button type="submit" class="btn btn-primary">Log in</button>
                             <input type="hidden" name="isteacher" value="true">
                         </form>

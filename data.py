@@ -27,13 +27,16 @@ def newdb():
             password TEXT NOT NULL,
             id INTEGER NOT NULL,
             is_teacher INTEGER NOT NULL);''')
+    users_connection.commit()
     students.execute('''CREATE TABLE IF NOT EXISTS students (
             student_id INTEGER UNIQUE NOT NULL,
             name TEXT NOT NULL,
             transcript_file TEXT UNIQUE NOT NULL);''')
+    students_connection.commit()
     teachers.execute('''CREATE TABLE IF NOT EXISTS teachers (
             teacer_id INTEGER UNIQUE NOT NULL,
             name TEXT NOT NULL);''')
+    teachers_connection.commit()
     #possibly still too big of a database
     grades.execute('''CREATE TABLE IF NOT EXISTS grades (
             student_id INTEGER NOT NULL,
@@ -43,17 +46,21 @@ def newdb():
             out_of INTEGER NOT NULL,
             date TEXT NOT NULL,
             weight INTEGER NOT NULL);''')
+    grades_connection.commit()
     classes.execute('''CREATE TABLE IF NOT EXISTS classes (
             teacher_id INTEGER NOT NULL,
             class_name TEXT UNIQUE NOT NULL);''')
+    classes_connection.commit()
     attendance.execute('''CREATE TABLE IF NOT EXISTS attendance (
             student_id INTEGER UNIQUE NOT NULL,
             date TEXT NOT NULL,
             type INTEGER NOT NULL);''')
+    attendance_connection.commit()
     schedules.execute('''CREATE TABLE IF NOT EXISTS schedules (
             student_id INTEGER UNIQUE NOT NULL,
             class_name TEXT NOT NULL,
             teacher_id INTEGER NOT NULL);''')
+    schedules_connection.commit()
 
 #user functions
 def register(username, password, id, isteacher):
@@ -69,6 +76,13 @@ def get_pass(username):
     #no duplicate usernames, so indexing is OK
     try:
         q = users.execute('SELECT * FROM users WHERE username=?', (username,)).fetchall()[0][1]
+    except Exception as e:
+        return e
+    return q
+
+def check_if_teacher(username):
+    try:
+        q = users.execute('SELECT is_teacher FROM users WHERE username=?', (username,)).fetchall()[0][0]
     except Exception as e:
         return e
     return q

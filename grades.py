@@ -33,34 +33,43 @@ def index():
     session['username'] = ""
     try:
         if request.method == "POST":
-            #derpy way of determining form
-            isTeacher = request.form['isteacher'] == "true" # yup.
+            #silly way to determine which form user is using
+            isTeacher = request.form['isteacher'] == "true"
             if not isTeacher:
                 stud_username = request.form['student_username']
                 stud_password = request.form['student_password']
+                #really slow
                 if sha256_crypt.verify(stud_password, data.get_pass(stud_username)):
-                    session['logged_in'] = True
-                    session['username'] = stud_username
-                    return redirect(url_for('student'))
+                    #make sure user is not a teacher, aka a student
+                    if not data.check_if_teacher(stud_username):
+                        session['logged_in'] = True
+                        session['username'] = stud_username
+                        return redirect(url_for('student'))
+                    else:
+                        #only if user is not a teacher
+                        flash('Incorrect login')
                 else:
                     flash('Incorrect password/username, please try again')
             else:
                 teach_username = request.form['teacher_username']
                 teach_password = request.form['teacher_password']
                 if sha256_crypt.verify(teach_password, data.get_pass(teach_username)):
-                    session['logged_in'] = True
-                    session['username'] = teach_username
-                    return redirect(url_for('teacher'))
+                    if data.check_if_teacher(teach_username):
+                        session['logged_in'] = True
+                        session['username'] = teach_username
+                        return redirect(url_for('teacher'))
+                    else:
+                        flash('Incorrect login')
                 else:
                     flash("Incorrect username/password, please try again.")
     except Exception as e:
         flash('That username does not exist, please try again. ' + str(e))
-        return render_template("index.html")
     return render_template("index.html")
 
-@login_required
+@login_required #supposedly
 @app.route('/student/')
 def student():
+    #login_required wrap doesn't work and session is encrypted anyway
     if not session['logged_in']:
         flash("You must be logged in to view this page.")
         return redirect(url_for('index'))
@@ -81,6 +90,7 @@ def admin_login():
         if request.method == "POST":
             attempted_username = request.form['admin_username']
             attempted_password = sha256_crypt.encrypt(request.form['admin_password'])
+            #eventually move this to a separate database
             if sha256_crypt.verify('password', attempted_password) and attempted_username == "admin":
                 session['logged_in'] = True
                 session['admin'] = True
@@ -118,6 +128,7 @@ def admin():
         flash(str(e))
     return render_template('admin.html')
 
+#errors
 @app.errorhandler(404)
 def four_oh_four(e):
     return render_template("404.html")
@@ -132,6 +143,7 @@ def method_not_allowed(e):
 
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 
+#probably good enough...
 app.secret_key = os.urandom(24)
 
 # debugging only
