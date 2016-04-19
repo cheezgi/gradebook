@@ -59,3 +59,21 @@ Log in as an admin and change the password. The default credentials are
 `admin` and `password`. Then, under **Create databases** click Create to set up
 the new databases.
 
+If you encounter any errors with database setup, try `touch`ing the following database
+files:
+
+```
+users.db
+students.db
+teachers.db
+gardes.db
+classes.db
+attendance.db
+schedules.db
+```
+
+You could also try the following command:
+
+`sudo chmod +rw *.db`
+
+This should fix database problems you may have.

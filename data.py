@@ -3,7 +3,7 @@ import sqlite3
 
 #ugh
 users_connection = sqlite3.connect('db/users.db')
-students_connection = sqlite3.connect('db/student.db')
+students_connection = sqlite3.connect('db/students.db')
 teachers_connection = sqlite3.connect('db/teachers.db')
 grades_connection = sqlite3.connect('db/grades.db')
 classes_connection = sqlite3.connect('db/classes.db')
