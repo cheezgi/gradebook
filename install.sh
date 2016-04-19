@@ -1,10 +1,12 @@
 #!/bin/bash
 cd ..
-dir = $1
-if [ -z dir ]
+$dir = $1
+echo $dir
+if [ -z $dir ]
 then
     dir = "gradebook"
 fi
+echo $dir
 echo "Installing gradebook in $dir"
 virtualenv $dir
 cd $dir
