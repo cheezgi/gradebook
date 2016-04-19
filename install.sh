@@ -1,10 +1,10 @@
 #!/bin/bash
 cd ..
-$directect = $1
+$direct = $1
 echo $directect
 if [ -z $direct ]
 then
-    direct = "gradebook"
+    $direct = "gradebook"
 fi
 echo $direct
 echo "Installing gradebook in $direct"
