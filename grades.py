@@ -67,13 +67,19 @@ def index():
     return render_template("index.html")
 
 @login_required #supposedly
-@app.route('/student/')
+@app.route('/student/', methods=["POST", "GET"])
 def student():
     #login_required wrap doesn't work and session is encrypted anyway
     if not session['logged_in']:
         flash("You must be logged in to view this page.")
         return redirect(url_for('index'))
-    return render_template("student.html")
+    else:
+        if request.method == "POST":
+            if request.form['logout'] == 'logout':
+                session['logged_in'] = False
+                flash('You have been logged out.')
+                return redirect(url_for('index'))
+        return render_template("student.html")
 
 @login_required
 @app.route('/teacher/')
@@ -81,7 +87,13 @@ def teacher():
     if not session['logged_in']:
         flash('You must be logged in to view this page.')
         return redirect(url_for('index'))
-    return render_template("teacher.html")
+    else:
+        if request.method == "POST":
+            if request.form['logout'] == 'logout':
+                session['logged_in'] = False
+                flash('You have been logged out.')
+                return redirect(url_for('index'))
+        return render_template("teacher.html")
 
 @app.route('/admin_login/', methods=["POST", "GET"])
 def admin_login():
