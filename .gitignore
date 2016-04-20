@@ -2,7 +2,6 @@ bin/
 lib/
 *.pyc
 *.db
-db/
 logs/
 include/
 autorun.sh

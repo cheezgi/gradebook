@@ -51,6 +51,20 @@
             <input type="hidden" name="form_name" value="databases">
         </form>
     </p>
+    <p><h3>Change ADMIN Password</h3></p>
+    <p>This will change the admin password for the current account.</p>
+    <p>
+        <form method="POST" action="" class="form-inline">
+            <input class="form-control" type="password" name="admin_new_pass", id="admin_new_pass"
+                placeholder="New Password">
+            <input class="form-control" type="password" name="admin_new_pass2", id="admin_new_pass2"
+                placeholder="New Password (repeat)">
+            <input class="form-control" type="password" name="admin_old_pass2", id="admin_old_pass2"
+                placeholder="Old Password">
+            <button type="submit" class="btn btn-warning">Change</button>
+            <input type="hidden" name="form_name" value="admin_pass">
+        </form>
+    </p>
 </div>
 </body>
 </html>

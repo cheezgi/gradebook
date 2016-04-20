@@ -70,6 +70,7 @@ gardes.db
 classes.db
 attendance.db
 schedules.db
+admins.db
 ```
 
 You could also try the following command:

@@ -89,16 +89,18 @@ def admin_login():
     try:
         if request.method == "POST":
             attempted_username = request.form['admin_username']
-            attempted_password = sha256_crypt.encrypt(request.form['admin_password'])
-            #eventually move this to a separate database
-            if sha256_crypt.verify('password', attempted_password) and attempted_username == "admin":
+            attempted_password = request.form['admin_password']
+            if sha256_crypt.verify(attempted_password, data.get_admin_pass(attempted_username)):
                 session['logged_in'] = True
                 session['admin'] = True
+                session['username'] = attempted_username
                 return redirect(url_for('admin'))
-            return render_template("admin_login.html")
+            flash('Incorrect admin credentials. This incedent will be logged.')
+            return redirect(url_for('index'))
     except Exception as e:
-        return render_template("admin_login.html")
-    return render_template("admin_login.html")
+        flash(e)
+        return redirect(url_for('index'))
+    return render_template('admin_login.html')
 
 @login_required
 @app.route('/admin/', methods=["GET", "POST"])
@@ -124,6 +126,16 @@ def admin():
                 session['logged_in'] = False
                 flash("Logged out.")
                 return redirect(url_for('index'))
+            if formName == "admin_pass":
+                old_pass = request.form['admin_old_pass']
+                new_pass2 = request.form['admin_new_pass2']
+                new_pass = request.form['admin_new_pass']
+                if new_pass == new_pass2:
+                    if sha256_crypt.verify(old_pass, data.get_admin_pass(session['username'])):
+                        data.change_admin_pass(new_pass, old_pass, session['username'])
+                    else:
+                        flash('Old password incorrect.')
+                    flash('New passwords do not match.')
     except Exception as e:
         flash(str(e))
     return render_template('admin.html')
