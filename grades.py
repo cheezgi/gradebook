@@ -126,6 +126,7 @@ def admin():
             formName = request.form['form_name']
             if formName == "register":
                 new_username = request.form['new_username']
+                new_id = request.form['']
                 if data.register(new_username, sha256_crypt.encrypt('password'), 2, 0):
                     flash("User registered")
                 else:
@@ -136,18 +137,10 @@ def admin():
             if formName == "logout":
                 session['admin'] = False
                 session['logged_in'] = False
-                flash("Logged out.")
+                flash("Logged out")
                 return redirect(url_for('index'))
             if formName == "admin_pass":
-                old_pass = request.form['admin_old_pass']
-                new_pass2 = request.form['admin_new_pass2']
-                new_pass = request.form['admin_new_pass']
-                if new_pass == new_pass2:
-                    if sha256_crypt.verify(old_pass, data.get_admin_pass(session['username'])):
-                        data.change_admin_pass(new_pass, old_pass, session['username'])
-                    else:
-                        flash('Old password incorrect.')
-                    flash('New passwords do not match.')
+
     except Exception as e:
         flash(str(e))
     return render_template('admin.html')
@@ -172,6 +165,6 @@ app.secret_key = os.urandom(24)
 
 # debugging only
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
 
 
