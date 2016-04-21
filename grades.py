@@ -102,6 +102,7 @@ def admin_login():
         if request.method == "POST":
             attempted_username = request.form['admin_username']
             attempted_password = request.form['admin_password']
+            print(data.get_pass(attempted_username))
             if sha256_crypt.verify(attempted_password, data.get_pass(attempted_username)):
                 if data.check_if_admin(attempted_username):
                     session['logged_in'] = True
@@ -155,7 +156,7 @@ def admin():
                 else:
                     flash('Passwords do not match.')
     except Exception as e:
-        flash(str(e))
+        raise(e)
     return render_template('admin.html')
 
 #errors

@@ -120,8 +120,8 @@ def get_pass(username):
 
 def change_pass(username, new_pass):
     try:
-        users.execute('REPLACE INTO users (username, password) VALUES (?, ?)', (username, new_pass))
-        users_connction.commit()
+        users.execute('UPDATE users SET password=? WHERE username=?', (new_pass, username))
+        users_connection.commit()
     except Exception as e:
         raise(e)
     return
