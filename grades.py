@@ -102,7 +102,6 @@ def admin_login():
         if request.method == "POST":
             attempted_username = request.form['admin_username']
             attempted_password = request.form['admin_password']
-            print(data.get_pass(attempted_username))
             if sha256_crypt.verify(attempted_password, data.get_pass(attempted_username)):
                 if data.check_if_admin(attempted_username):
                     session['logged_in'] = True
@@ -150,7 +149,8 @@ def admin():
                 old_pass = request.form['admin_old_pass']
                 if sha256_crypt.verify(old_pass, data.get_pass(username)):
                     if new_pass == new_pass2:
-                        data.change_pass(username, new_pass)
+                        data.change_pass(username, sha256_crypt.encrypt(new_pass.encode('utf-8')))
+                        flash('Your password has been changed.')
                     else:
                         flash('Old password is incorrect.')
                 else:

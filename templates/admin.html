@@ -18,7 +18,7 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <div class="container" style="max-width:900px;margin-top:40px;">
-    <div class="container-fluid" style="min-height:100%">
+    <div class="container-fluid">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {% for message in messages %}
@@ -30,77 +30,60 @@
         {% endwith %}
     </div>
     <form method="POST" action="" class="form-inline">
-        <input type="hidden" name="form_name" value="logout">
         <button type="submit" class="btn btn-info">Log out</button>
+        <input type="hidden" name="form_name" value="logout">
     </form>
     <p><h3>Register/remove users</h3></p>
     <p>The default password is "password"</p>
-    <!--    <div class="container" style="max-width:600px;">-->
-        <form class="form-horizontal" method="POST" action="">
-            <div class="form-group">
-                <label for="new_username">New username</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" name="new_username" id="new_username"
-                        placeholder="New Username" value="">
-                </div>
+    <div style="padding-left:15px;">
+        <form class="form-inline" method="POST" action="">
+            <input class="form-control" type="text" name="new_username" id="new_username"
+                placeholder="New Username" value="">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="is_teacher" id="is_teacher" value=""> Is this user a teacher?
+                </label>
             </div>
-            <div class="form-group">
-                <label for="new_id">New ID</label>
-                <div class="col-sm-10">
-                    <input class="form-control" type="text" name="new_id" id="new_id" placeholder="New ID"
-                        value="">
-                </div>
+            <br> <!-- <- blatant misuse of bootstrap -->
+            <input class="form-control" type="text" name="new_id" id="new_id" placeholder="New ID" value="">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="is_admin" id="is_admin" value=""> Is this user an admin?
+                </label>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="is_teacher" id="is_teacher" value=""> Is this user a teacher?
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="is_admin" id="is_admin" value=""> Is this user an admin?
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-info">Register</button>
-                </div>
-            </div>
+            <br>
+            <button type="submit" class="btn btn-info">Register</button>
             <input type="hidden" name="form_name" value="register">
             <!-- form type, used for logic stuff -->
         </form>
-        <!--    </div>-->
+    </div>
     <p><h3/>Create databases</h3></p>
-    <p>
-        <form method="POST" action="" class="form-inline">
-            This will create new databases if they do not already exist. This must
-            be pressed in order to begin working.<br>
-            <button type="submit" class="btn btn-warning">Create</button>
-            <input type="hidden" name="form_name" value="databases">
-        </form>
-    </p>
+    <div style="padding-left:15px;">
+        <p>
+            <form method="POST" action="" class="form-inline">
+                This will create new databases if they do not already exist. This must
+                be pressed in order to begin working.<br>
+                <button type="submit" class="btn btn-warning">Create</button>
+                <input type="hidden" name="form_name" value="databases">
+            </form>
+        </p>
+    </div>
     <p><h3>Change ADMIN Password</h3></p>
     <p>This will change the admin password for the current account.</p>
-    <p>
-        <form method="POST" action="" class="form-inline">
-            <input class="form-control" type="password" name="admin_new_pass", id="admin_new_pass"
-                placeholder="New Password">
-            <input class="form-control" type="password" name="admin_new_pass2", id="admin_new_pass2"
-                placeholder="New Password (repeat)">
-            <input class="form-control" type="password" name="admin_old_pass", id="admin_old_pass"
-                placeholder="Old Password">
-            <button type="submit" class="btn btn-warning">Change</button>
-            <input type="hidden" name="form_name" value="admin_pass">
-        </form>
-    </p>
+    <div style="padding-left:15px;">
+        <p>
+            <form method="POST" action="" class="form-inline">
+                <input class="form-control" type="password" name="admin_new_pass", id="admin_new_pass"
+                    placeholder="New Password">
+                <input class="form-control" type="password" name="admin_new_pass2", id="admin_new_pass2"
+                    placeholder="New Password (repeat)">
+                <input class="form-control" type="password" name="admin_old_pass", id="admin_old_pass"
+                    placeholder="Old Password">
+                <button type="submit" class="btn btn-warning">Change</button>
+                <input type="hidden" name="form_name" value="admin_pass">
+            </form>
+        </p>
+    </div>
 </div>
 <br>
 <br>
