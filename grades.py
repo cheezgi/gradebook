@@ -102,12 +102,16 @@ def admin_login():
         if request.method == "POST":
             attempted_username = request.form['admin_username']
             attempted_password = request.form['admin_password']
-            if sha256_crypt.verify(attempted_password, data.get_admin_pass(attempted_username)):
-                session['logged_in'] = True
-                session['admin'] = True
-                session['username'] = attempted_username
-                return redirect(url_for('admin'))
-            flash('Incorrect admin credentials. This incedent will be logged.')
+            if sha256_crypt.verify(attempted_password, data.get_pass(attempted_username)):
+                if data.check_if_admin(attempted_username):
+                    session['logged_in'] = True
+                    session['admin'] = True
+                    session['username'] = attempted_username
+                    return redirect(url_for('admin'))
+                else:
+                    flash('You do not have admin privileges.')
+            else:
+                flash('Incorrect credentials. This incedent will be logged.')
             return redirect(url_for('index'))
     except Exception as e:
         flash(e)
@@ -126,7 +130,6 @@ def admin():
             formName = request.form['form_name']
             if formName == "register":
                 new_username = request.form['new_username']
-                new_id = request.form['']
                 if data.register(new_username, sha256_crypt.encrypt('password'), 2, 0):
                     flash("User registered")
                 else:
@@ -140,7 +143,17 @@ def admin():
                 flash("Logged out")
                 return redirect(url_for('index'))
             if formName == "admin_pass":
-
+                username = session['username']
+                new_pass = request.form['admin_new_pass']
+                new_pass2 = request.form['admin_new_pass2']
+                old_pass = request.form['admin_old_pass']
+                if sha256_crypt.verify(old_pass, data.get_pass(username)):
+                    if new_pass == new_pass2:
+                        data.change_pass(username, new_pass)
+                    else:
+                        flash('Old password is incorrect.')
+                else:
+                    flash('Passwords do not match.')
     except Exception as e:
         flash(str(e))
     return render_template('admin.html')
@@ -165,6 +178,6 @@ app.secret_key = os.urandom(24)
 
 # debugging only
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
 
 

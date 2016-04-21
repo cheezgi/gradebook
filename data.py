@@ -37,7 +37,7 @@ def newdb():
             transcript_file TEXT UNIQUE NOT NULL);''')
     students_connection.commit()
     teachers.execute('''CREATE TABLE IF NOT EXISTS teachers (
-            teacer_id INTEGER UNIQUE NOT NULL,
+            teacher_id INTEGER UNIQUE NOT NULL,
             name TEXT NOT NULL);''')
     teachers_connection.commit()
     #possibly still too big of a database
@@ -113,16 +113,31 @@ def register(username, password, id, isadmin, isteacher):
 def get_pass(username):
     #no duplicate usernames, so indexing is OK
     try:
-        q = users.execute('SELECT * FROM users WHERE username=?', (username,)).fetchall()[0][1]
+        q = users.execute('SELECT password FROM users WHERE username=?', (username,)).fetchall()[0][0]
     except Exception as e:
-        return e
+        raise(e)
     return q
+
+def change_pass(username, new_pass):
+    try:
+        users.execute('REPLACE INTO users (username, password) VALUES (?, ?)', (username, new_pass))
+        users_connction.commit()
+    except Exception as e:
+        raise(e)
+    return
 
 def check_if_teacher(username):
     try:
         q = users.execute('SELECT is_teacher FROM users WHERE username=?', (username,)).fetchall()[0][0]
     except Exception as e:
-        return e
+        raise(e)
+    return q
+
+def check_if_admin(username):
+    try:
+        q = users.execute('SELECT is_admin FROM users WHERE username=?', (username,)).fetchall()[0][0]
+    except Exception as e:
+        raise(e)
     return q
 
 def get_student_grades(studentID):
