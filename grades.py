@@ -1,5 +1,5 @@
 import data
-from flask import Flask, render_template, flash, request, url_for, redirect, session, g
+from flask import Flask, render_template, flash, request, url_for, redirect, session, g, send_from_directory
 from functools import wraps
 import gc
 import os
@@ -63,7 +63,7 @@ def index():
                 else:
                     flash("Incorrect username/password, please try again.")
     except Exception as e:
-        flash('That username does not exist, please try again. ' + str(e))
+        flash('That username does not exist, please try again.')
     return render_template("index.html")
 
 @login_required #supposedly
@@ -174,6 +174,10 @@ def admin():
     except Exception as e:
         raise(e)
     return render_template('admin.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 #errors
 @app.errorhandler(404)
