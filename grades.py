@@ -164,6 +164,13 @@ def admin():
                         flash('Old password is incorrect.')
                 else:
                     flash('Passwords do not match.')
+            if formName == "remove":
+                username = request.form['rm_username']
+                user_id = request.form['user_id']
+                if data.remove(username, user_id):
+                    flash("User successfully removed.")
+                else:
+                    flash("User does not exist.")
     except Exception as e:
         raise(e)
     return render_template('admin.html')

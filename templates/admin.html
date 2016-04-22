@@ -33,7 +33,7 @@
         <button type="submit" class="btn btn-info">Log out</button>
         <input type="hidden" name="form_name" value="logout">
     </form>
-    <p><h3>Register/remove users</h3></p>
+    <p><h3>Register users</h3></p>
     <p>The default password is "password"</p>
     <div style="padding-left:15px;">
         <form class="form-inline" method="POST" action="">
@@ -55,6 +55,19 @@
             <button type="submit" class="btn btn-info">Register</button>
             <input type="hidden" name="form_name" value="register">
             <!-- form type, used for logic stuff -->
+        </form>
+    </div>
+    <p><h3>Remove users</h3></p>
+    <p>Remove a user from the user database. This does not remove their grade, attendance, or schedule data.<br>
+       <b>Removal of a user is permanent. </b>There is no way to restore a user to the database without
+       knowing their ID and username.<br><br>Only proceed if you are certain you want to do this.</p>
+    <div style="padding-left:15px;">
+        <form class="form-inline" method="POST" action="">
+            <input class="form-control" type="text" name="rm_username" id="rm_username" placeholder="Username" value="">
+            <br>
+            <input class="form-control" type="text" name="user_id" id="user_id" placeholder="User ID" value="">
+            <button type="submit" class="btn btn-danger"><strong>Remove user</strong></button>
+            <input type="hidden" name="form_name" value="remove">
         </form>
     </div>
     <p><h3/>Create databases</h3></p>

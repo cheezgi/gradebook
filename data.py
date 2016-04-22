@@ -73,6 +73,14 @@ def register(username, password, id, isadmin, isteacher):
         return False
     return True
 
+def remove(username, id):
+    if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, id)).fetchall():
+        users.execute("DELETE FROM users WHERE username=? AND id=?", (username, id))
+        users_connection.commit()
+        return True
+    else:
+        return False
+
 def get_pass(username):
     #no duplicate usernames, so indexing is OK
     try:
