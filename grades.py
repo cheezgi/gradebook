@@ -130,7 +130,16 @@ def admin():
             formName = request.form['form_name']
             if formName == "register":
                 new_username = request.form['new_username']
-                if data.register(new_username, sha256_crypt.encrypt('password'), 2, 0):
+                new_id = request.form['new_id']
+                try: #why would I do this
+                    is_teacher = bool(request.form['is_teacher'])
+                except Exception as e:
+                    is_teacher = False
+                try:
+                    is_admin = bool(request.form['is_admin'])
+                except Exception as e:
+                    is_admin = False
+                if data.register(new_username, sha256_crypt.encrypt('password'), new_id, is_admin, is_teacher):
                     flash("User registered")
                 else:
                     flash("Username taken")
@@ -161,16 +170,16 @@ def admin():
 
 #errors
 @app.errorhandler(404)
-def four_oh_four(e):
+def page_not_found(e):
     return render_template("404.html")
 
 @app.errorhandler(500)
-def five_hundred(e):
+def internal_error(e):
     return render_template("500.html", error = e)
 
 @app.errorhandler(405)
 def method_not_allowed(e):
-    return "<h1 style='color:red;'>405 error &#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;</h1>"
+    return "<h1 style='color:red;'> " + str(e) + " 405 error &#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;</h1>"
 
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 
