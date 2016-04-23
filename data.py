@@ -1,5 +1,6 @@
 import gc
 import sqlite3
+from subprocess import call
 
 #ugh
 users_connection = sqlite3.connect('db/users.db')
@@ -64,11 +65,11 @@ def newdb():
     schedules_connection.commit()
 
 #user functions
-def register(username, password, id, isadmin, isteacher):
+def register(username, password, ident, isadmin, isteacher):
     # relies on falseness of []
     if not users.execute("SELECT * FROM users WHERE username=?", (username,)).fetchall():
         try:
-            users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, id, isadmin, isteacher))
+            users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, iddent, isadmin, isteacher))
             users_connection.commit()
         except Exception as e:
             raise(e)
@@ -76,10 +77,10 @@ def register(username, password, id, isadmin, isteacher):
         return False
     return True
 
-def add_student(id, name, transcript_file):
-    if not students.execute("SELECT * FROM students WHERE student_id=?", (id,)):
+def add_student(ident, name, transcript_file):
+    if not students.execute("SELECT * FROM students WHERE student_id=?", (ident,)):
         try:
-            students.execute("INSERT INTO students VALUES (?, ?, ?)", (id, name, trascript_file))
+            students.execute("INSERT INTO students VALUES (?, ?, ?)", (ident, name, trascript_file))
             students_connection.commit()
         except Exception as e:
             raise(e)
@@ -87,10 +88,10 @@ def add_student(id, name, transcript_file):
     else:
         return False
 
-def add_teacher(id, name):
-    if not teachers.execute("SELECT * FROM teachers WHERE teacher_id=?", (id,)):
+def add_teacher(ident, name):
+    if not teachers.execute("SELECT * FROM teachers WHERE teacher_id=?", (ident,)):
         try:
-            teachers.execute("INSERT INTO teachers VALUES (?, ?)", (id, name))
+            teachers.execute("INSERT INTO teachers VALUES (?, ?)", (ident, name))
             teachers_connection.commit()
         except Exception as e:
             raise(e)
@@ -98,10 +99,15 @@ def add_teacher(id, name):
     else:
         return False
 
-def remove(username, id):
-    if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, id)).fetchall():
+def get_transcript(ident):
+    #this will be pretty big, just something random for now
+    call("touch", "transcripts/" + str(iddent) + ".txt")
+    return "transcripts/" + str(id) + ".txt"
+
+def remove(username, iddent):
+    if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, iddent)).fetchall():
         try:
-            users.execute("DELETE FROM users WHERE username=? AND id=?", (username, id))
+            users.execute("DELETE FROM users WHERE username=? AND id=?", (username, iddent))
             users_connection.commit()
         except Exception as e:
             raise(e)

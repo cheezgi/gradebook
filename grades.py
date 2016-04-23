@@ -215,6 +215,10 @@ def internal_error(e):
 def method_not_allowed(e):
     return "<h1 style='color:red;'>&#9773; 405 error: method not allowed &#9773;"
 
+@app.errorhandler(400)
+def fuck_me(e):
+    return "<h1 style='font-size:600%;'></h1>"
+
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 
 #probably good enough...
