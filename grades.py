@@ -4,6 +4,7 @@ from functools import wraps
 import gc
 import os
 from passlib.hash import sha256_crypt
+from subprocess import call
 #from werkzeug.contrib.fixers import ProxyFix #uncomment for gunicorn uwsgi
 
 # TODO: database searching for matched passwords
@@ -171,6 +172,15 @@ def admin():
                     flash("User successfully removed.")
                 else:
                     flash("User does not exist.")
+            if formName == "admin_pass":
+                username = request.form['user_username']
+                password = request.form['user_password']
+                data.change_pass(username, sha256_crypt.encrypt(password.encode('utf-8')))
+                flash("Password has been changed.")
+            #don't really know if I want this
+            if formName == "shutdown":
+                call(["sudo", "pkill", "gunicorn"])
+                flash("Server has been shut down.")
     except Exception as e:
         raise(e)
     return render_template('admin.html')
@@ -190,7 +200,7 @@ def internal_error(e):
 
 @app.errorhandler(405)
 def method_not_allowed(e):
-    return "<h1 style='color:red;'> " + str(e) + " 405 error &#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;&#9773;</h1>"
+    return "<h1 style='color:red;'>&#9773; 405 error: method not allowed &#9773;"
 
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 

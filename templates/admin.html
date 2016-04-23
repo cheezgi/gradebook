@@ -33,6 +33,12 @@
         <button type="submit" class="btn btn-info">Log out</button>
         <input type="hidden" name="form_name" value="logout">
     </form>
+    <!-- don't really know if I want this
+    <form method="POST" action="" class="form-inline">
+        <button type="submit" class="btn btn-danger"><b>Shut down</b></button>
+        <input type="hidden" name="form_name" value="shutdown">
+    </form>
+    -->
     <p><h3>Register users</h3></p>
     <p>The default password is "password"</p>
     <div style="padding-left:15px;">
@@ -81,16 +87,26 @@
             </form>
         </p>
     </div>
-    <p><h3>Change ADMIN Password</h3></p>
+    <p><h3>Change user password</h3></p>
+    <p>This will change the password for a specific user's account.</p>
+    <div style="padding-left:15px;">
+        <form class="form-inline" method="POST" action="">
+            <input class="form-control" type="text" name="user_username" id="user_username" placeholder="Username">
+            <input class="form-control" type="text" name="user_password" id="user_password" placeholder="Password (visible)">
+            <button type="submit" class="btn btn-info">Change</button>
+            <input type="hidden" name="form_name" value="user_pass">
+        </form>
+    </div>
+    <p><h3>Change admin password</h3></p>
     <p>This will change the admin password for the current account.</p>
     <div style="padding-left:15px;">
         <p>
             <form method="POST" action="" class="form-inline">
-                <input class="form-control" type="password" name="admin_new_pass", id="admin_new_pass"
+                <input class="form-control" type="password" name="admin_new_pass" id="admin_new_pass"
                     placeholder="New Password">
-                <input class="form-control" type="password" name="admin_new_pass2", id="admin_new_pass2"
+                <input class="form-control" type="password" name="admin_new_pass2" id="admin_new_pass2"
                     placeholder="New Password (repeat)">
-                <input class="form-control" type="password" name="admin_old_pass", id="admin_old_pass"
+                <input class="form-control" type="password" name="admin_old_pass" id="admin_old_pass"
                     placeholder="Old Password">
                 <button type="submit" class="btn btn-warning">Change</button>
                 <input type="hidden" name="form_name" value="admin_pass">
