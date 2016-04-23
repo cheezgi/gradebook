@@ -69,7 +69,7 @@ def register(username, password, ident, isadmin, isteacher):
     # relies on falseness of []
     if not users.execute("SELECT * FROM users WHERE username=?", (username,)).fetchall():
         try:
-            users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, iddent, isadmin, isteacher))
+            users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, ident, isadmin, isteacher))
             users_connection.commit()
         except Exception as e:
             raise(e)
@@ -101,13 +101,13 @@ def add_teacher(ident, name):
 
 def get_transcript(ident):
     #this will be pretty big, just something random for now
-    call("touch", "transcripts/" + str(iddent) + ".txt")
+    call("touch", "transcripts/" + str(ident) + ".txt")
     return "transcripts/" + str(id) + ".txt"
 
-def remove(username, iddent):
-    if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, iddent)).fetchall():
+def remove(username, ident):
+    if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, ident)).fetchall():
         try:
-            users.execute("DELETE FROM users WHERE username=? AND id=?", (username, iddent))
+            users.execute("DELETE FROM users WHERE username=? AND id=?", (username, ident))
             users_connection.commit()
         except Exception as e:
             raise(e)
