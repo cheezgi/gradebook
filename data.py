@@ -87,7 +87,7 @@ def add_student(id, name, transcript_file):
     else:
         return False
 
-def add_teachre(id, name):
+def add_teacher(id, name):
     if not teachers.execute("SELECT * FROM teachers WHERE teacher_id=?", (id,)):
         try:
             teachers.execute("INSERT INTO teachers VALUES (?, ?)", (id, name))
