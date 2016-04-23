@@ -142,13 +142,19 @@ def admin():
                 except Exception as e:
                     is_admin = False
                 if data.register(new_username, sha256_crypt.encrypt('password'), new_id, is_admin, is_teacher):
-                    if not is_teacher:
-                        if data.add_student(new_id, name, data.get_trascript(new_id)):
-                            flash("Student registered")
+                    if not is_admin:
+                        if not is_teacher:
+                            if data.add_student(new_id, name, data.get_trascript(new_id)):
+                                flash("Student registered")
+                            else:
+                                flash("This student was already registered in the students database, but their account was not found. It has been created.")
                         else:
-                            flash("This student was already registered in the students database, but their account was not found.")
+                            if data.add_teacher(new_id, name):
+                                flash("Teacher registered")
+                            else:
+                                flash("This teacher was already registered in the teachers database, but their account was not found. It has been created.")
                     else:
-                        if data.add_teacher()
+                        flash("New admin registered.")
                 else:
                     flash("Username taken")
             if formName == "databases":
