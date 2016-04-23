@@ -67,32 +67,44 @@ def newdb():
 def register(username, password, id, isadmin, isteacher):
     # relies on falseness of []
     if not users.execute("SELECT * FROM users WHERE username=?", (username,)).fetchall():
-        users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, id, isadmin, isteacher))
-        users_connection.commit()
+        try:
+            users.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", (username, password, id, isadmin, isteacher))
+            users_connection.commit()
+        except Exception as e:
+            raise(e)
     else:
         return False
     return True
 
 def add_student(id, name, transcript_file):
     if not students.execute("SELECT * FROM students WHERE student_id=?", (id,)):
-        students.execute("INSERT INTO students VALUES (?, ?, ?)", (id, name, trascript_file))
-        students_connection.commit()
+        try:
+            students.execute("INSERT INTO students VALUES (?, ?, ?)", (id, name, trascript_file))
+            students_connection.commit()
+        except Exception as e:
+            raise(e)
         return True
     else:
         return False
 
 def add_teachre(id, name):
     if not teachers.execute("SELECT * FROM teachers WHERE teacher_id=?", (id,)):
-        teachers.execute("INSERT INTO teachers VALUES (?, ?)", (id, name))
-        teachers_connection.commit()
+        try:
+            teachers.execute("INSERT INTO teachers VALUES (?, ?)", (id, name))
+            teachers_connection.commit()
+        except Exception as e:
+            raise(e)
         return True
     else:
         return False
 
 def remove(username, id):
     if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, id)).fetchall():
-        users.execute("DELETE FROM users WHERE username=? AND id=?", (username, id))
-        users_connection.commit()
+        try:
+            users.execute("DELETE FROM users WHERE username=? AND id=?", (username, id))
+            users_connection.commit()
+        except Exception as e:
+            raise(e)
         return True
     else:
         return False
