@@ -73,6 +73,22 @@ def register(username, password, id, isadmin, isteacher):
         return False
     return True
 
+def add_student(id, name, transcript_file):
+    if not students.execute("SELECT * FROM students WHERE student_id=?", (id,)):
+        students.execute("INSERT INTO students VALUES (?, ?, ?)", (id, name, trascript_file))
+        students_connection.commit()
+        return True
+    else:
+        return False
+
+def add_teachre(id, name):
+    if not teachers.execute("SELECT * FROM teachers WHERE teacher_id=?", (id,)):
+        teachers.execute("INSERT INTO teachers VALUES (?, ?)", (id, name))
+        teachers_connection.commit()
+        return True
+    else:
+        return False
+
 def remove(username, id):
     if users.execute("SELECT * FROM users WHERE username=? AND id=?", (username, id)).fetchall():
         users.execute("DELETE FROM users WHERE username=? AND id=?", (username, id))

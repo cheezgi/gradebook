@@ -80,10 +80,10 @@ def student():
                 session['logged_in'] = False
                 flash('You have been logged out.')
                 return redirect(url_for('index'))
-        return render_template("student.html")
+        return render_template("student.html", user=session['username'])
 
 @login_required
-@app.route('/teacher/')
+@app.route('/teacher/', methods=["POST", "GET"])
 def teacher():
     if not session['logged_in']:
         flash('You must be logged in to view this page.')
@@ -94,7 +94,7 @@ def teacher():
                 session['logged_in'] = False
                 flash('You have been logged out.')
                 return redirect(url_for('index'))
-        return render_template("teacher.html")
+        return render_template("teacher.html", user = session['username'])
 
 @app.route('/admin_login/', methods=["POST", "GET"])
 def admin_login():
@@ -132,6 +132,7 @@ def admin():
             if formName == "register":
                 new_username = request.form['new_username']
                 new_id = request.form['new_id']
+                name = request.form['name']
                 try: #why would I do this
                     is_teacher = bool(request.form['is_teacher'])
                 except Exception as e:
@@ -141,7 +142,13 @@ def admin():
                 except Exception as e:
                     is_admin = False
                 if data.register(new_username, sha256_crypt.encrypt('password'), new_id, is_admin, is_teacher):
-                    flash("User registered")
+                    if not is_teacher:
+                        if data.add_student(new_id, name, data.get_trascript(new_id)):
+                            flash("Student registered")
+                        else:
+                            flash("This student was already registered in the students database, but their account was not found.")
+                    else:
+                        if data.add_teacher()
                 else:
                     flash("Username taken")
             if formName == "databases":
