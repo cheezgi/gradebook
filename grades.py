@@ -218,7 +218,7 @@ def method_not_allowed(e):
 
 @app.errorhandler(400)
 def fuck_me(e):
-    return "<h1 style='font-size:600%;'fuck</h1>"
+    return "<h1 style='font-size:600%;'>fuck</h1>"
 
 #app.wsgi_app = ProxyFix(app.wsgi_app) #uncomment for gunicorn uwsgi
 

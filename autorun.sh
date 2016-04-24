@@ -9,6 +9,9 @@ else
         echo "Restarting gunicorn"
         sudo pkill gunicorn
         sudo bin/gunicorn --bind 0.0.0.0:80 grades:app 2> logs/log.txt &
+    elif [ "$1" == "debug" ]; then
+        echo "Running in debug mode"
+        bin/python grades.py
     else
         echo "Already running"
     fi
